@@ -1,0 +1,54 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36408.4
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineStore.Application", "OnlineStore.Application\OnlineStore.Application.csproj", "{994F353A-851F-4531-98BA-1515C807D131}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineStore.Infrastructure", "OnlineStore.Infrastructure\OnlineStore.Infrastructure.csproj", "{908F61E8-B469-4CC3-895E-058BF61E0472}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineStore.Domain", "OnlineStore.Domain\OnlineStore.Domain.csproj", "{ACCFD090-3D1A-45D2-8DEA-54F119734F5C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineStore.Api", "OnlineStore.Api\OnlineStore.Api.csproj", "{51FE0D8D-52EF-F2E0-451B-110112D77E00}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineStore.Migrations", "OnlineStore.Migrations\OnlineStore.Migrations.csproj", "{6138C626-09DC-42DB-BEFA-91775099C011}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{994F353A-851F-4531-98BA-1515C807D131}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{994F353A-851F-4531-98BA-1515C807D131}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{994F353A-851F-4531-98BA-1515C807D131}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{994F353A-851F-4531-98BA-1515C807D131}.Release|Any CPU.Build.0 = Release|Any CPU
+		{908F61E8-B469-4CC3-895E-058BF61E0472}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{908F61E8-B469-4CC3-895E-058BF61E0472}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{908F61E8-B469-4CC3-895E-058BF61E0472}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{908F61E8-B469-4CC3-895E-058BF61E0472}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ACCFD090-3D1A-45D2-8DEA-54F119734F5C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ACCFD090-3D1A-45D2-8DEA-54F119734F5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ACCFD090-3D1A-45D2-8DEA-54F119734F5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ACCFD090-3D1A-45D2-8DEA-54F119734F5C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{51FE0D8D-52EF-F2E0-451B-110112D77E00}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{51FE0D8D-52EF-F2E0-451B-110112D77E00}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{51FE0D8D-52EF-F2E0-451B-110112D77E00}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{51FE0D8D-52EF-F2E0-451B-110112D77E00}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6138C626-09DC-42DB-BEFA-91775099C011}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6138C626-09DC-42DB-BEFA-91775099C011}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6138C626-09DC-42DB-BEFA-91775099C011}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6138C626-09DC-42DB-BEFA-91775099C011}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {30FCC5C6-A83F-48E3-9A26-E991F8028284}
+	EndGlobalSection
+EndGlobal
