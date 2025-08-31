@@ -5,6 +5,7 @@ using OnlineStore.Application.Providers;
 using OnlineStore.Application.Requests;
 using OnlineStore.Application.utils;
 using OnlineStore.Domain.Entities;
+using OnlineStore.Domain.Enums;
 using OnlineStore.Domain.Interfaces;
 using System.Numerics;
 
@@ -24,7 +25,7 @@ public class UserService : IUserService
         _validator = validator;
     }
 
-    public async Task<Result<User>> CreateAsync(SignUpRequest request)
+    public async Task<Result<User>> CreateAsync(SignUpRequest request, RoleValue role = RoleValue.Customer)
     {
 
         var validationResult = _validator.Validate(request);
@@ -43,6 +44,7 @@ public class UserService : IUserService
         var user = request.Adapt<User>();
         user.CreatedAt = DateTime.UtcNow;
         user.PasswordHash = _passwordHasher.Hash(request.Password);
+        user.Roles = role;
 
         int userId = await _unitOfWork.Users.AddAsync(user);
         user.Id = userId;

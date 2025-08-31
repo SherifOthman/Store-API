@@ -10,7 +10,7 @@ public class SignUpRequest
     public string Email { get; set; } = string.Empty;
     public string Password { get; set; } = string.Empty;
     public string PhoneNumber { get; set; } = string.Empty;
-    public string? AvatarlUser { get; set; } = string.Empty;
+    public string? AvatarlUrl { get; set; } = string.Empty;
 }
 
 

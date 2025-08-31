@@ -12,27 +12,32 @@ namespace OnlineStore.Api.Controllers;
 public class AuthController : ControllerBase
 {
     private readonly IAuthService _service;
+    private readonly ILogger<AuthController> _logger;
     private readonly JwtOptions _options;
 
     public AuthController(IAuthService service,
         ILoggedInUser loggedInUser,
-        IOptions<JwtOptions> options)
+        IOptions<JwtOptions> options,
+        ILogger<AuthController> logger)
     {
         _service = service;
+        _logger = logger;
         _options = options.Value;
     }
 
-    [HttpPost("SignUp")]
+    [HttpPost("signup")]
     public async Task<IActionResult> SignUp([FromBody] SignUpRequest request)
     {
         var result = await _service.SignUpAsync(request);
         if (!result.Success)
             return BadRequest(result);
 
+        _logger.LogInformation("Signed up user: {email}", request.Email);
+
         return NoContent();
     }
 
-    [HttpPost("SignIn")]
+    [HttpPost("signin")]
     public async Task<ActionResult<Result<AuthResponse>>> SignIn([FromBody] SignInRequestWithFlag request)
     {
         var authResponse = await _service.SignInAsync(request);
@@ -43,16 +48,15 @@ public class AuthController : ControllerBase
             SetRefreshTokenInCookies(authResponse.Data!.RefreshToken);
         authResponse.Data!.RefreshToken = "";
 
+        _logger.LogInformation("User ({email}) signed in", request.Email);
+
         return Ok(authResponse);
     }
 
 
-    [HttpPost("RefreshToken")]
+    [HttpPost("refresh")]
     public async Task<ActionResult<Result<AuthResponse>>> RefreshToken([FromBody] RefreshTokenRequest request)
     {
-
-        HttpContext.Connection.RemoteIpAddress?.ToString();
-
         if (!Request.Cookies.ContainsKey("RefreshToken"))
             return Unauthorized("Invalid RefreshToken");
 

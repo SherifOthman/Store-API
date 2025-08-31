@@ -5,5 +5,4 @@ public record UserDto(
     string Email,
     string PhoneNumber,
     string? AvatarUrl,
-    int Roles,
-    DateTime CreatedAt);
+    int Roles);

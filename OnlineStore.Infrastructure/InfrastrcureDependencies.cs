@@ -11,7 +11,7 @@ public static class InfrastrcureDependencies
         return services.AddScoped<IUnitOfWork>(sp =>
         {
             var configuration = sp.GetRequiredService<IConfiguration>();
-            var connString = configuration.GetConnectionString("DefaultConnection");
+            var connString = configuration.GetConnectionString("Default");
 
             ArgumentNullException.ThrowIfNullOrEmpty(connString);
 

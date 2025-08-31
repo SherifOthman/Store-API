@@ -17,7 +17,8 @@ public static class ApplicationDependencies
         services.AddScoped<IJwtProvider, JwtProvider>();
         services.AddScoped<IPasswordHasher, PasswordHasher>();
         services.AddScoped<IRefreshTokenService, RefreshTokenService>();
-        services.AddScoped<UserService, UserService>();
+        services.AddScoped<IUserService, UserService>();
+        services.AddScoped<IAuthService, AuthService>();
         services.AddScoped<IValidator<SignUpRequest>, SignUpRequestValidator>();
 
 

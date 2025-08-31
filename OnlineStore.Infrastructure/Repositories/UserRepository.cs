@@ -28,21 +28,23 @@ internal class UserRepository : IUserRepository
     }
     public Task UpdateAsync(User user)
     {
-       return _connection.ExecuteAsync("sp_User_Update",
-            user, _transaction, commandType: CommandType.StoredProcedure);
+        return _connection.ExecuteAsync("sp_User_Update",
+             user, _transaction, commandType: CommandType.StoredProcedure);
     }
 
-    public Task<User?> GetByEmailAsync(string email)
+    public async Task<User?> GetByEmailAsync(string email)
     {
-        return _connection.QueryFirstOrDefaultAsync<User>("sp_User_GetByEmail",
-                 _transaction, commandType: CommandType.StoredProcedure);
+        var user = await _connection.QueryFirstOrDefaultAsync<User>("sp_User_GetByEmail",
+                new { Email = email }, _transaction, commandType: CommandType.StoredProcedure);
+
+        return user;
     }
 
     public Task<User?> GetByIdAsync(int Id)
     {
-      return  _connection.QueryFirstOrDefaultAsync<User>("sp_User_GetById",
-            _transaction, commandType: CommandType.StoredProcedure);
+        return _connection.QueryFirstOrDefaultAsync<User>("sp_User_GetById",
+              _transaction, commandType: CommandType.StoredProcedure);
     }
 
-   
+
 }

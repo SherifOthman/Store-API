@@ -21,7 +21,7 @@ internal class RefreshTokenRepository : IRefreshTokenRepository
         paramters.Add("Id", direction: ParameterDirection.Output);
 
         await _connection.ExecuteAsync("sp_RefreshToken_Add"
-              , paramters, _transaction, commandType: CommandType.StoredProcedure);
+              ,paramters ,_transaction, commandType: CommandType.StoredProcedure);
 
         int insertedId = paramters.Get<int>("Id");
 
