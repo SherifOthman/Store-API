@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using OnlineStore.Api.utils;
 using OnlineStore.Application.Common;
 using OnlineStore.Application.Options;
 using OnlineStore.Application.Requests;
@@ -13,7 +14,9 @@ public class AuthController : ControllerBase
     private readonly IAuthService _service;
     private readonly JwtOptions _options;
 
-    public AuthController(IAuthService service, IOptions<JwtOptions> options)
+    public AuthController(IAuthService service,
+        ILoggedInUser loggedInUser,
+        IOptions<JwtOptions> options)
     {
         _service = service;
         _options = options.Value;
@@ -47,9 +50,16 @@ public class AuthController : ControllerBase
     [HttpPost("RefreshToken")]
     public async Task<ActionResult<Result<AuthResponse>>> RefreshToken([FromBody] RefreshTokenRequest request)
     {
-        var authResponse = await _service.RefreshTokenAsync(request.RefreshToken);
+
+        HttpContext.Connection.RemoteIpAddress?.ToString();
+
+        if (!Request.Cookies.ContainsKey("RefreshToken"))
+            return Unauthorized("Invalid RefreshToken");
+
+
+        var authResponse = await _service.RefreshTokenAsync(Request.Cookies["RefreshToken"]!);
         if (!authResponse.Success)
-            return BadRequest(authResponse);
+            return Unauthorized(authResponse);
 
         if (request.RefreshTokenAsHttpOnly)
             SetRefreshTokenInCookies(authResponse.Data!.RefreshToken);
@@ -78,4 +88,4 @@ public class SignInRequestWithFlag : SignInRequest
     public bool RefreshTokenAsHttpOnly { get; set; }
 }
 
-public record RefreshTokenRequest(string RefreshToken, bool RefreshTokenAsHttpOnly);
+public record RefreshTokenRequest(bool RefreshTokenAsHttpOnly);

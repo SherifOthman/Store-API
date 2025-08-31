@@ -11,16 +11,16 @@ using System.Numerics;
 public class UserService : IUserService
 {
     private readonly IPasswordHasher _passwordHasher;
-    private readonly IUserRepository _userRepository;
+    private readonly IUnitOfWork _unitOfWork;
     private readonly IValidator<SignUpRequest> _validator;
 
     public UserService(IPasswordHasher passwordHasher,
-        IUserRepository userRepository,
+        IUnitOfWork unitOfWork,
         IValidator<SignUpRequest> validator
    )
     {
         _passwordHasher = passwordHasher;
-        _userRepository = userRepository;
+        _unitOfWork = unitOfWork;
         _validator = validator;
     }
 
@@ -32,7 +32,7 @@ public class UserService : IUserService
         if (!validationResult.IsValid)
             return Result<User>.Fail(validationResult.Errors.ToErrorItemList());
 
-        var existing = await _userRepository.GetByEmailAsync(request.Email);
+        var existing = await _unitOfWork.Users.GetByEmailAsync(request.Email);
         if (existing != null)
             return Result<User>.Fail(new ErrorItem
             {
@@ -44,7 +44,7 @@ public class UserService : IUserService
         user.CreatedAt = DateTime.UtcNow;
         user.PasswordHash = _passwordHasher.Hash(request.Password);
 
-        int userId = await _userRepository.AddAsync(user);
+        int userId = await _unitOfWork.Users.AddAsync(user);
         user.Id = userId;
 
         return Result<User>.Ok(user);
@@ -55,10 +55,10 @@ public class UserService : IUserService
         return user != null && _passwordHasher.Verify(password, user.PasswordHash);
     }
 
-    public Task<User?> GetByEmailAsync(string email) => _userRepository.GetByEmailAsync(email);
+    public Task<User?> GetByEmailAsync(string email) => _unitOfWork.Users.GetByEmailAsync(email);
 
     public async Task<User?> GetByIdAsync(int Id)
     {
-        return await _userRepository.GetByIdAsync(Id);
+        return await _unitOfWork.Users.GetByIdAsync(Id);
     }
 }

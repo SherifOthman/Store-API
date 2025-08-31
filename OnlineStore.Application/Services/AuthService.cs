@@ -51,8 +51,6 @@ public class AuthService : IAuthService
         string refreshToken = (await _refreshTokenService.GenerateForUserAsync(user.Id,
             _options.RefreshTokenExpiry)).Value;
 
-        var AuthResponse = new AuthResponse(accessToken, refreshToken, user.Adapt<UserDto>());
-
         return await PrpareAuthResponse(user);
 
     }
@@ -77,7 +75,12 @@ public class AuthService : IAuthService
         string refreshToken = (await _refreshTokenService.GenerateForUserAsync(user.Id,
             _options.RefreshTokenExpiry)).Value;
 
-        var AuthResponse = new AuthResponse(accessToken, refreshToken, user.Adapt<UserDto>());
+        var AuthResponse = new AuthResponse
+        {
+            AccessToken = accessToken,
+            RefreshToken = refreshToken,
+            User = user.Adapt<UserDto>()
+        };
 
         return AuthResponse;
     }

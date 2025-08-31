@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using FluentValidation;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using OnlineStore.Application.Options;
 using OnlineStore.Application.Providers;
+using OnlineStore.Application.Requests;
 using OnlineStore.Application.Services;
 using System.Text;
 
@@ -16,6 +18,7 @@ public static class ApplicationDependencies
         services.AddScoped<IPasswordHasher, PasswordHasher>();
         services.AddScoped<IRefreshTokenService, RefreshTokenService>();
         services.AddScoped<UserService, UserService>();
+        services.AddScoped<IValidator<SignUpRequest>, SignUpRequestValidator>();
 
 
         services.Configure<JwtOptions>(configuration.GetSection(key: "JWT"));
