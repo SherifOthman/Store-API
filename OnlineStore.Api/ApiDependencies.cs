@@ -1,4 +1,5 @@
 ﻿using OnlineStore.Api.utils;
+using OnlineStore.Application.Providers;
 using Serilog;
 
 namespace OnlineStore.Api;

@@ -8,5 +8,4 @@ public class RefreshToken
     public string Value { get; set; } = default!;
     public DateTime ExpiryDate { get; set; }
 
-
 }

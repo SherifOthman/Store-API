@@ -1,12 +1,6 @@
-﻿namespace OnlineStore.Api.utils;
+﻿using OnlineStore.Application.Providers;
 
-public interface ILoggedInUser
-{
-    string GetIpAddress();
-
-    int GetUserId();
-
-}
+namespace OnlineStore.Api.utils;
 
 
 public class LoggedInUser : ILoggedInUser

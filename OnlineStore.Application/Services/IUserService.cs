@@ -9,5 +9,4 @@ public interface IUserService
     Task<User?> GetByIdAsync(int Id);
     Task<User?> GetByEmailAsync(string email);
     bool VerifyPassword(User user, string password);
-
 }

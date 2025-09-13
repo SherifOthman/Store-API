@@ -16,8 +16,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineStore.Api", "OnlineStore.Api\OnlineStore.Api.csproj", "{51FE0D8D-52EF-F2E0-451B-110112D77E00}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineStore.Migrations", "OnlineStore.Migrations\OnlineStore.Migrations.csproj", "{6138C626-09DC-42DB-BEFA-91775099C011}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -40,10 +38,6 @@ Global
 		{51FE0D8D-52EF-F2E0-451B-110112D77E00}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{51FE0D8D-52EF-F2E0-451B-110112D77E00}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{51FE0D8D-52EF-F2E0-451B-110112D77E00}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6138C626-09DC-42DB-BEFA-91775099C011}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6138C626-09DC-42DB-BEFA-91775099C011}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6138C626-09DC-42DB-BEFA-91775099C011}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6138C626-09DC-42DB-BEFA-91775099C011}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
