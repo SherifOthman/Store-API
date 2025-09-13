@@ -41,7 +41,7 @@ public class RefreshTokenService : IRefreshTokenService
         if (token == null) return false;
 
 
-        return !token.IsRevoked && token.ExpiryDate > DateTime.UtcNow;
+        return !token.IsRevoked || token.ExpiryDate > DateTime.UtcNow;
     }
 
     public async Task RevokeAsync(string tokenValue)

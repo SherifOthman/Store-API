@@ -21,7 +21,7 @@ internal class RefreshTokenRepository : IRefreshTokenRepository
         paramters.Add("Id", direction: ParameterDirection.Output);
 
         await _connection.ExecuteAsync("sp_RefreshToken_Add"
-              ,paramters ,_transaction, commandType: CommandType.StoredProcedure);
+              , paramters, _transaction, commandType: CommandType.StoredProcedure);
 
         int insertedId = paramters.Get<int>("Id");
 
@@ -31,7 +31,7 @@ internal class RefreshTokenRepository : IRefreshTokenRepository
     public Task<RefreshToken?> GetByValueAsync(string value)
     {
         return _connection.QueryFirstOrDefaultAsync<RefreshToken>("sp_RefreshToken_GetByValue",
-              value, _transaction, commandType: CommandType.StoredProcedure);
+              param: new { Value = value }, _transaction, commandType: CommandType.StoredProcedure);
     }
 
     public Task UpdateAsync(RefreshToken refreshToken)

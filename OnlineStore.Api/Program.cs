@@ -20,17 +20,17 @@ builder.Services.AddApiApiDependencies();
 builder.Services.AddInfrastrcureDependencies(builder.Configuration);
 builder.Services.AddApplicationDependencies(builder.Configuration);
 
-//builder.Services.AddCors(options =>
-//{
-//    options.AddPolicy("AllowLocalhost5173", policy =>
-//    {
-//        policy
-//            .WithOrigins("http://localhost:5173")
-//            .AllowAnyHeader()
-//            .AllowAnyMethod()
-//            .AllowCredentials();
-//    });
-//});
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowLocalhost5173", policy =>
+    {
+        policy
+            .WithOrigins("http://localhost:5173")
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowCredentials();
+    });
+});
 
 try
 {
@@ -44,9 +44,9 @@ try
         app.MapOpenApi();
     }
 
-    //app.UseCors("AllowLocalhost5173");
+    app.UseCors("AllowLocalhost5173");
 
-    app.UseHttpsRedirection();
+    //app.UseHttpsRedirection();
 
     app.UseAuthorization();
 

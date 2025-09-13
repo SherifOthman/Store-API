@@ -46,8 +46,6 @@ public class AuthController : ControllerBase
 
         SetRefreshTokenInCookies(authResponse.Data!.RefreshToken);
 
-        authResponse.Data.RefreshToken = string.Empty;
-
         _logger.LogInformation("User ({email}) signed in", request.Email);
 
         return Ok(authResponse);
@@ -59,13 +57,12 @@ public class AuthController : ControllerBase
         if (!Request.Cookies.ContainsKey("RefreshToken"))
             return Unauthorized("Invalid RefreshToken");
 
+
         var authResponse = await _authService.RefreshTokenAsync(Request.Cookies["RefreshToken"]!);
         if (!authResponse.Success)
             return Unauthorized(authResponse);
 
         SetRefreshTokenInCookies(authResponse.Data!.RefreshToken);
-
-        authResponse.Data.RefreshToken = string.Empty;
 
         return Ok(authResponse);
     }

@@ -43,7 +43,7 @@ internal class UserRepository : IUserRepository
     public Task<User?> GetByIdAsync(int Id)
     {
         return _connection.QueryFirstOrDefaultAsync<User>("sp_User_GetById",
-              _transaction, commandType: CommandType.StoredProcedure);
+              new { Id }, _transaction, commandType: CommandType.StoredProcedure);
     }
 
 
