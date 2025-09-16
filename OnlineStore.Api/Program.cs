@@ -22,7 +22,7 @@ builder.Services.AddApplicationDependencies(builder.Configuration);
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowLocalhost5173", policy =>
+    options.AddPolicy("AllowFrontend", policy =>
     {
         policy
             .WithOrigins("http://localhost:5173")
@@ -44,7 +44,7 @@ try
         app.MapOpenApi();
     }
 
-    app.UseCors("AllowLocalhost5173");
+    app.UseCors("AllowFrontend");
 
     //app.UseHttpsRedirection();
 

@@ -72,6 +72,7 @@ public class AuthService : IAuthService
     public async Task Logout(string refreshToken)
     {
         await _refreshTokenService.RevokeAsync(refreshToken);
+
     }
 
     private async Task<AuthResponse> PrpareAuthResponse(User user)

@@ -70,11 +70,11 @@ public class AuthController : ControllerBase
     [HttpPost("logout")]
     public async Task<IActionResult> Logout()
     {
-        if (Request.Cookies.ContainsKey("RefreshToken"))
-        {
-            await _authService.Logout(Request.Cookies["RefreshToken"]!);
-            Response.Cookies.Delete("RefreshToken");
 
+        if (Request.Cookies.TryGetValue("RefreshToken", out string? refreshToken))
+        {
+            await _authService.Logout(refreshToken);
+            Response.Cookies.Delete("RefreshToken");
             _logger.LogInformation("User logged out and refresh token cookie cleared");
         }
 
@@ -87,9 +87,10 @@ public class AuthController : ControllerBase
             new CookieOptions
             {
                 HttpOnly = true,
-                SameSite = SameSiteMode.Strict,
+                Secure = true,
+                SameSite = SameSiteMode.None,
                 Expires = DateTime.UtcNow.AddDays(_options.RefreshTokenExpiry)
-                // Secure = true; // Uncomment in production with HTTPS
             });
     }
+
 }

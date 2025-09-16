@@ -44,6 +44,8 @@ public static class ApplicationDependencies
                     (Encoding.UTF8.GetBytes(jwtOptions.SecurityKey)),
                     ClockSkew = TimeSpan.Zero
                 };
+
+           
             });
 
         return services;
