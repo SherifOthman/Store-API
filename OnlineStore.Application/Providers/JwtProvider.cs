@@ -37,7 +37,7 @@ internal class JwtProvider : IJwtProvider
     {
         var userClaims = new List<Claim>
         {
-            new(ClaimTypes.NameIdentifier, user.Id.ToString()),
+            new(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
         };
 
         _GetUserRoles(user).ForEach(role =>

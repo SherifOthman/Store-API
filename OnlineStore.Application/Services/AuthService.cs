@@ -1,8 +1,6 @@
-﻿using FluentValidation;
-using Mapster;
+﻿
 using Microsoft.Extensions.Options;
 using OnlineStore.Application.Common;
-using OnlineStore.Application.DTOs;
 using OnlineStore.Application.Options;
 using OnlineStore.Application.Providers;
 using OnlineStore.Application.Requests;
@@ -16,6 +14,7 @@ public class AuthService : IAuthService
     private readonly IUserService _userService;
     private readonly IRefreshTokenService _refreshTokenService;
     private readonly IJwtProvider _jwtProvider;
+    private readonly IUnitOfWork _unitOfWork;
     private readonly JwtOptions _options;
 
     public AuthService(IUserService userService,
@@ -26,6 +25,7 @@ public class AuthService : IAuthService
     {
         _userService = userService;
         _refreshTokenService = refreshTokenService;
+        _unitOfWork = unitOfWork;
         _jwtProvider = jwtProvider;
         _options = options.Value;
     }
@@ -41,7 +41,7 @@ public class AuthService : IAuthService
 
     public async Task<Result<AuthResponse>> SignInAsync(SignInRequest request)
     {
-        var user = await _userService.GetByEmailAsync(request.Email);
+        var user = await _unitOfWork.Users.GetByEmailAsync(request.Email);
         if (user == null || !_userService.VerifyPassword(user, request.Password))
         {
             return Result<AuthResponse>.Fail("Invalid email or password");
@@ -64,7 +64,7 @@ public class AuthService : IAuthService
 
         await _refreshTokenService.RevokeAsync(refreshToken);
 
-        var user = await _userService.GetByIdAsync(existing.UserId);
+        var user = await _unitOfWork.Users.GetByIdAsync(existing.UserId);
 
         return await PrpareAuthResponse(user!);
     }
@@ -85,7 +85,6 @@ public class AuthService : IAuthService
         {
             AccessToken = accessToken,
             RefreshToken = refreshToken,
-            User = user.Adapt<UserDto>()
         };
 
         return AuthResponse;

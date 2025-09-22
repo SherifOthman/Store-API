@@ -1,7 +1,9 @@
 using OnlineStore.Api;
 using OnlineStore.Api.Middlewares;
+using OnlineStore.Api.Utils;
 using OnlineStore.Application;
 using OnlineStore.Infrastructure;
+using Scalar.AspNetCore;
 using Serilog;
 
 Log.Logger = new LoggerConfiguration()
@@ -14,11 +16,13 @@ builder.Services.AddSerilog();
 
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
+builder.Services.AddOpenApi("v1",
+    options=> options.AddDocumentTransformer<BearerSecuritySchemeTransformer>());
 
 builder.Services.AddApiApiDependencies();
 builder.Services.AddInfrastrcureDependencies(builder.Configuration);
 builder.Services.AddApplicationDependencies(builder.Configuration);
+
 
 builder.Services.AddCors(options =>
 {
@@ -42,6 +46,7 @@ try
     if (app.Environment.IsDevelopment())
     {
         app.MapOpenApi();
+        app.MapScalarApiReference();
     }
 
     app.UseCors("AllowFrontend");

@@ -1,5 +1,5 @@
-﻿namespace OnlineStore.Application.DTOs;
-public record UserDto(
+﻿namespace OnlineStore.Application.Responses;
+public record UserResponse(
     string FirstName,
     string LastName,
     string Email,

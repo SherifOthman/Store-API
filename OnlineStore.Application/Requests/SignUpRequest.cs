@@ -1,5 +1,4 @@
 ﻿using FluentValidation;
-using System.ComponentModel.DataAnnotations;
 
 namespace OnlineStore.Application.Requests;
 

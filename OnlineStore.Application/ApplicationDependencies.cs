@@ -20,6 +20,7 @@ public static class ApplicationDependencies
         services.AddScoped<IUserService, UserService>();
         services.AddScoped<IAuthService, AuthService>();
         services.AddScoped<IValidator<SignUpRequest>, SignUpRequestValidator>();
+        services.AddScoped<IValidator<UpdateUserRequest>, UpdateUserRequestValidator>();
 
 
         services.Configure<JwtOptions>(configuration.GetSection(key: "JWT"));

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using OnlineStore.Application.Common;
 using OnlineStore.Application.Options;
@@ -80,7 +81,7 @@ public class AuthController : ControllerBase
 
         return NoContent();
     }
-
+   
     private void SetRefreshTokenInCookies(string refreshToken)
     {
         Response.Cookies.Append("RefreshToken", refreshToken,

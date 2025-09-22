@@ -7,11 +7,9 @@ using System.Threading.Tasks;
 namespace OnlineStore.Application.Providers;
 public interface ILoggedInUser
 {
-    public interface ILoggedInUser
-    {
-        string GetIpAddress();
 
-        int GetUserId();
+    string? GetIpAddress();
 
-    }
+    int? GetUserId();
+
 }

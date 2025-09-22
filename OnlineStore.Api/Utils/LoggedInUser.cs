@@ -1,4 +1,5 @@
 ﻿using OnlineStore.Application.Providers;
+using System.Security.Claims;
 
 namespace OnlineStore.Api.utils;
 
@@ -13,18 +14,21 @@ public class LoggedInUser : ILoggedInUser
         _accessor = accessor;
     }
 
-    public string GetIpAddress()
+    public string? GetIpAddress()
     {
         var ip = _accessor.HttpContext?.Connection.RemoteIpAddress?.ToString();
 
-        var forwarded = _accessor.HttpContext?.Request.Headers["X-Forwarded-For"].FirstOrDefault();
-        return forwarded ?? ip ?? "Unknown";
+        var forwarded = _accessor.HttpContext?.Request.Headers["X-Forwarded-For"]
+            .FirstOrDefault();
+
+        return forwarded ?? ip ;
     }
 
-    public int GetUserId()
+    public int? GetUserId()
     {
-       var userIdClaim = _accessor.HttpContext?.User.FindFirst("sub")?.Value;
+       var userIdClaim = _accessor.HttpContext?.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
-        return userIdClaim != null ? int.Parse(userIdClaim) : 0;
+        return userIdClaim != null ? int.Parse(userIdClaim) : null;
     }
+
 }
