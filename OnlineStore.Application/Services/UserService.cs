@@ -70,7 +70,7 @@ public class UserService : IUserService
         int? userId = _loggedInUser.GetUserId();
 
         if (userId == null)
-            return Result<UserResponse>.Fail("No user logged in");
+            return Result<UserResponse>.Fail("No user logged in.");
 
         var validationResult = _updateValidator.Validate(request);
 
@@ -97,11 +97,37 @@ public class UserService : IUserService
         int? userId = _loggedInUser.GetUserId();
 
         if (userId == null)
-            return Result<UserResponse>.Fail("No user logged in");
+            return Result<UserResponse>.Fail("No user logged in.");
 
         var user = await _unitOfWork.Users.GetByIdAsync(userId.Value);
 
         return user.Adapt<UserResponse>();
+    }
+
+    public async Task<Result> ChangePasswordAsync(ChangePasswordRequest request)
+    {
+        var userId = _loggedInUser.GetUserId();
+        if (userId == null)
+            return Result.Fail("No user logged in.");
+
+        var user = await _unitOfWork.Users.GetByIdAsync(userId.Value);
+        if (user == null)
+            return Result.Fail("User was not found.");
+
+        _passwordHasher.Hash(request.NewPassword);
+        if (!_passwordHasher.Verify(request.CurrentPassword, user.PasswordHash))
+        {
+            return Result.Fail(new ErrorItem
+            {
+                Field = nameof(request.CurrentPassword),
+                Message = "The current password is incorrect."
+            });
+        }
+
+        user.PasswordHash = _passwordHasher.Hash(request.NewPassword);
+        await _unitOfWork.Users.UpdateAsync(user);
+
+        return Result.Ok();
     }
 
 

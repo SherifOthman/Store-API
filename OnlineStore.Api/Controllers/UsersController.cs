@@ -44,4 +44,15 @@ public class UsersController : ControllerBase
 
         return NoContent();
     }
+
+    [Authorize]
+    [HttpPost("change-password")]
+    public async Task<ActionResult<Result>> ChangePassword(ChangePasswordRequest request)
+    {
+        var result = await _userService.ChangePasswordAsync(request);
+        if (!result.Success)
+            return BadRequest(result);
+
+        return Ok(result);
+    }
 }

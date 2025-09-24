@@ -3,7 +3,7 @@ using FluentValidation.Results;
 using OnlineStore.Application.Common;
 
 namespace OnlineStore.Application.utils;
-public static class ValidationFailureExtention
+public static class ValidationFailureExtension
 {
     public static List<ErrorItem> ToErrorItemList(this ICollection<ValidationFailure> failures)
     {
