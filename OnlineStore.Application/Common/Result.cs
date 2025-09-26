@@ -36,6 +36,16 @@ public class Result<T> : Result
 
 public class ErrorItem
 {
+    private string _field = string.Empty;
+
+    public string Field
+    {
+        get { return _field; }
+        set
+        {
+            _field =
+                char.ToLower(value[0]) + value.Substring(1);
+        }
+    }
     public string Message { get; set; } = string.Empty;
-    public string Field { get; set; } = string.Empty;
 }

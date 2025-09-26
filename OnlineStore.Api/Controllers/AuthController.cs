@@ -28,7 +28,7 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("signup")]
-    public async Task<IActionResult> SignUp([FromBody] SignUpRequest request)
+    public async Task<IActionResult> SignUp([FromForm] SignUpRequest request)
     {
         var result = await _authService.SignUpAsync(request);
         if (!result.Success)

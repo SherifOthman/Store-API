@@ -32,7 +32,7 @@ public class UsersController : ControllerBase
 
     [Authorize]
     [HttpPut("me")]
-    public async Task<IActionResult> UpdateCurrentUser(UpdateUserRequest request)
+    public async Task<IActionResult> UpdateCurrentUser([FromForm] UpdateUserRequest request)
     {
 
         var result = await _userService.UpdateLoggedInUserAsync(request);

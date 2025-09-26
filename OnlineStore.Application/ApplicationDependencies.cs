@@ -19,6 +19,7 @@ public static class ApplicationDependencies
         services.AddScoped<IRefreshTokenService, RefreshTokenService>();
         services.AddScoped<IUserService, UserService>();
         services.AddScoped<IAuthService, AuthService>();
+        services.AddScoped<IFileService, FileService>();
         services.AddScoped<IValidator<SignUpRequest>, SignUpRequestValidator>();
         services.AddScoped<IValidator<UpdateUserRequest>, UpdateUserRequestValidator>();
 

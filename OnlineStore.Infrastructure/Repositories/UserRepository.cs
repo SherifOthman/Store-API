@@ -26,6 +26,7 @@ internal class UserRepository : IUserRepository
 
         return parameters.Get<int>("Id");
     }
+
     public Task UpdateAsync(User user)
     {
         return _connection.ExecuteAsync("sp_User_Update",

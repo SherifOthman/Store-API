@@ -1,3 +1,4 @@
+using Microsoft.Extensions.FileProviders;
 using OnlineStore.Api;
 using OnlineStore.Api.Middlewares;
 using OnlineStore.Api.Utils;
@@ -24,17 +25,6 @@ builder.Services.AddInfrastrcureDependencies(builder.Configuration);
 builder.Services.AddApplicationDependencies(builder.Configuration);
 
 
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("AllowFrontend", policy =>
-    {
-        policy
-            .WithOrigins("http://localhost:5173")
-            .AllowAnyHeader()
-            .AllowAnyMethod()
-            .AllowCredentials();
-    });
-});
 
 try
 {
@@ -48,6 +38,13 @@ try
         app.MapOpenApi();
         app.MapScalarApiReference();
     }
+
+    app.UseStaticFiles(new StaticFileOptions
+    {
+        FileProvider = new PhysicalFileProvider(
+             Path.Combine(builder.Environment.ContentRootPath, "Uploads")),
+        RequestPath = "/Resources"
+    });
 
     app.UseCors("AllowFrontend");
 

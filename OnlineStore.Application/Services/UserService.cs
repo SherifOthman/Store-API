@@ -1,10 +1,12 @@
 ﻿using FluentValidation;
 using Mapster;
 using MapsterMapper;
+using Microsoft.Extensions.Logging;
 using OnlineStore.Application.Common;
 using OnlineStore.Application.Providers;
 using OnlineStore.Application.Requests;
 using OnlineStore.Application.Responses;
+using OnlineStore.Application.Services;
 using OnlineStore.Application.utils;
 using OnlineStore.Domain.Entities;
 using OnlineStore.Domain.Enums;
@@ -18,12 +20,17 @@ public class UserService : IUserService
     private readonly IValidator<SignUpRequest> _signinValidator;
     private readonly IValidator<UpdateUserRequest> _updateValidator;
     private readonly ILoggedInUser _loggedInUser;
+    private readonly IFileService _fileService;
+    private readonly ILogger<UserService> _logger;
 
     public UserService(IPasswordHasher passwordHasher,
         IUnitOfWork unitOfWork,
         IValidator<SignUpRequest> signinValidator,
         IValidator<UpdateUserRequest> updateValidator,
-        ILoggedInUser loggedInUser
+        ILoggedInUser loggedInUser,
+        IFileService fileService,
+        ILogger<UserService> logger
+
    )
     {
         _passwordHasher = passwordHasher;
@@ -31,6 +38,8 @@ public class UserService : IUserService
         _signinValidator = signinValidator;
         _updateValidator = updateValidator;
         _loggedInUser = loggedInUser;
+        _fileService = fileService;
+        _logger = logger;
     }
 
     public async Task<Result<User>> CreateAsync(SignUpRequest request, RoleValue role = RoleValue.Customer)
@@ -50,6 +59,21 @@ public class UserService : IUserService
             });
 
         var user = request.Adapt<User>();
+
+        if (request.ImageFile != null)
+        {
+            try
+            {
+                var newImage = await _fileService.SaveFileAsync(request.ImageFile);
+                user.AvatarUrl = newImage;
+            }
+            catch (Exception err)
+            {
+                _logger.LogError("Unable to handle saving user image: {v}", err);
+                return Result<User>.Fail("Something went wrong, while saving the image");
+            }
+        }
+
         user.CreatedAt = DateTime.UtcNow;
         user.PasswordHash = _passwordHasher.Hash(request.Password);
         user.Roles = role;
@@ -67,6 +91,7 @@ public class UserService : IUserService
 
     public async Task<Result> UpdateLoggedInUserAsync(UpdateUserRequest request)
     {
+
         int? userId = _loggedInUser.GetUserId();
 
         if (userId == null)
@@ -84,7 +109,27 @@ public class UserService : IUserService
         if (user == null)
             return Result.Fail("User was not found");
 
+        if (request.ImageFile != null)
+        {
+            try
+            {
+                var oldImage = user.AvatarUrl;
+                var newImage = await _fileService.SaveFileAsync(request.ImageFile);
+                if (!string.IsNullOrEmpty(oldImage))
+                {
+                    _fileService.DeleteFile(oldImage);
+                }
+                user.AvatarUrl = newImage;
+            }
+            catch (Exception err)
+            {
+                _logger.LogError("Unable to handle saving user image: {v}", err);
+                return Result.Fail("Something went wrong, while saving the image");
+            }
+        }
+
         request.Adapt(user);
+
 
         await _unitOfWork.Users.UpdateAsync(user);
 
