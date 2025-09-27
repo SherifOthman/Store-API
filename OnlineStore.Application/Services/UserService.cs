@@ -22,6 +22,7 @@ public class UserService : IUserService
     private readonly ILoggedInUser _loggedInUser;
     private readonly IFileService _fileService;
     private readonly ILogger<UserService> _logger;
+    private readonly IFileUrlBuilder _fileUrlBuilder;
 
     public UserService(IPasswordHasher passwordHasher,
         IUnitOfWork unitOfWork,
@@ -29,7 +30,8 @@ public class UserService : IUserService
         IValidator<UpdateUserRequest> updateValidator,
         ILoggedInUser loggedInUser,
         IFileService fileService,
-        ILogger<UserService> logger
+        ILogger<UserService> logger,
+        IFileUrlBuilder fileUrlBuilder
 
    )
     {
@@ -40,6 +42,7 @@ public class UserService : IUserService
         _loggedInUser = loggedInUser;
         _fileService = fileService;
         _logger = logger;
+        _fileUrlBuilder = fileUrlBuilder;
     }
 
     public async Task<Result<User>> CreateAsync(SignUpRequest request, RoleValue role = RoleValue.Customer)
@@ -145,6 +148,9 @@ public class UserService : IUserService
             return Result<UserResponse>.Fail("No user logged in.");
 
         var user = await _unitOfWork.Users.GetByIdAsync(userId.Value);
+
+        if (user != null && !string.IsNullOrEmpty(user.AvatarUrl))
+            user.AvatarUrl = _fileUrlBuilder.BuildFileUrl(user.AvatarUrl);
 
         return user.Adapt<UserResponse>();
     }
