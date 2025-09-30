@@ -21,7 +21,7 @@ builder.Services.AddOpenApi("v1",
     options=> options.AddDocumentTransformer<BearerSecuritySchemeTransformer>());
 
 builder.Services.AddApiApiDependencies();
-builder.Services.AddInfrastrcureDependencies(builder.Configuration);
+builder.Services.AddInfrastructureDependencies(builder.Configuration);
 builder.Services.AddApplicationDependencies(builder.Configuration);
 
 

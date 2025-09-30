@@ -79,7 +79,7 @@ public class UserService : IUserService
 
         user.CreatedAt = DateTime.UtcNow;
         user.PasswordHash = _passwordHasher.Hash(request.Password);
-        user.Roles = role;
+        user.Role = role;
 
         int userId = await _unitOfWork.Users.AddAsync(user);
         user.Id = userId;
@@ -151,6 +151,9 @@ public class UserService : IUserService
 
         if (user != null && !string.IsNullOrEmpty(user.AvatarUrl))
             user.AvatarUrl = _fileUrlBuilder.BuildFileUrl(user.AvatarUrl);
+
+        var userResponse = user.Adapt<UserResponse>();
+        userResponse.Role = user!.Role.ToString();
 
         return user.Adapt<UserResponse>();
     }

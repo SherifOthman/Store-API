@@ -52,18 +52,19 @@ internal class JwtProvider : IJwtProvider
     {
         // System roles as enums
         RoleValue[] roles = Enum.GetValues<RoleValue>();
-        List<string> userRlesAsString = new List<string>();
+        List<string> userRolesAsString = new List<string>();
 
 
         foreach (var role in roles)
         {
             // Match each enum role with user roles
-            if (user.Roles.HasFlag(role))
+            if (user.Role.HasFlag(role))
             {
-                userRlesAsString.Add(role.ToString());
+                userRolesAsString.Add(role.ToString());
             }
         }
 
-        return userRlesAsString;
+        return userRolesAsString;
+
     }
 }

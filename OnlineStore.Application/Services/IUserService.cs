@@ -10,7 +10,6 @@ public interface IUserService
     bool VerifyPassword(User user, string password);
     Task<Result<UserResponse>> GetLoggedInUserAsync();
     Task<Result> UpdateLoggedInUserAsync(UpdateUserRequest request);
-
     Task<Result> ChangePasswordAsync(ChangePasswordRequest request);
 
 }

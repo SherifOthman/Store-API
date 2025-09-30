@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OnlineStore.Application.Common;
 using OnlineStore.Application.Requests;
@@ -29,13 +28,12 @@ public class UsersController : ControllerBase
         return Ok(result);
     }
 
-
     [Authorize]
     [HttpPut("me")]
     public async Task<IActionResult> UpdateCurrentUser([FromForm] UpdateUserRequest request)
     {
 
-        var result = await _userService.UpdateLoggedInUserAsync(request);
+            var result = await _userService.UpdateLoggedInUserAsync(request);
 
         if (!result.Success)
         {
@@ -46,7 +44,7 @@ public class UsersController : ControllerBase
     }
 
     [Authorize]
-    [HttpPost("change-password")]
+    [HttpPut("change-password")]
     public async Task<ActionResult<Result>> ChangePassword(ChangePasswordRequest request)
     {
         var result = await _userService.ChangePasswordAsync(request);

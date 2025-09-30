@@ -27,6 +27,8 @@ public class UpdateUserRequestValidator : AbstractValidator<UpdateUserRequest>
             .NotEmpty()
             .MinimumLength(3);
 
+
+
         RuleFor(x => x.PhoneNumber)
             .NotEmpty()
             .Length(11)

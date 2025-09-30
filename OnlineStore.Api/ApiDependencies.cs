@@ -1,4 +1,5 @@
 ﻿using OnlineStore.Api.utils;
+using OnlineStore.Application.Mapping;
 using OnlineStore.Application.Providers;
 using Serilog;
 
@@ -22,6 +23,8 @@ public static class ApiDependencies
                     .AllowCredentials();
             });
         });
+
+        MapsterConfig.RegisterMappings();
 
         return services;
     }

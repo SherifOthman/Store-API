@@ -17,13 +17,15 @@ internal class UnitOfWork : IUnitOfWork
         _transaction = null!;
     }
     public IUserRepository Users => field ??
-        new UserRepository(_connection,_transaction);
+        new UserRepository(_connection, _transaction);
     public IRefreshTokenRepository RefreshTokens => field ??
         new RefreshTokenRepository(_connection, _transaction);
 
+    public ICategoryRepository Categories => field ?? new CategoryRepository(_connection, _transaction);
+
     public void BeginTransaction()
     {
-        _transaction = _connection .BeginTransaction();
+        _transaction = _connection.BeginTransaction();
     }
 
     public void Commit()

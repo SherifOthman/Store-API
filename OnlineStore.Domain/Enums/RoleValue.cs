@@ -1,6 +1,5 @@
 ﻿namespace OnlineStore.Domain.Enums;
 
-[Flags]
 public enum RoleValue
 {
     Customer = 1 << 0,

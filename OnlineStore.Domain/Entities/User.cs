@@ -15,7 +15,7 @@ public class User
     public string? AvatarUrl { get; set; } = string.Empty;
    
     // Generated and retrived by Enum with bitwise operator
-    public RoleValue Roles { get; set; }
+    public RoleValue Role { get; set; }
     public DateTime CreatedAt { get; set; }
     public bool IsActive { get; set; }
 

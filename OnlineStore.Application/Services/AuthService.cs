@@ -1,4 +1,4 @@
-﻿
+﻿ 
 using Microsoft.Extensions.Options;
 using OnlineStore.Application.Common;
 using OnlineStore.Application.Options;
@@ -51,7 +51,7 @@ public class AuthService : IAuthService
         string refreshToken = (await _refreshTokenService.GenerateForUserAsync(user.Id,
             _options.RefreshTokenExpiry)).Value;
 
-        return await PrpareAuthResponse(user);
+        return await PrepareAuthResponse(user);
 
     }
 
@@ -66,7 +66,7 @@ public class AuthService : IAuthService
 
         var user = await _unitOfWork.Users.GetByIdAsync(existing.UserId);
 
-        return await PrpareAuthResponse(user!);
+        return await PrepareAuthResponse(user!);
     }
 
     public async Task Logout(string refreshToken)
@@ -75,7 +75,7 @@ public class AuthService : IAuthService
 
     }
 
-    private async Task<AuthResponse> PrpareAuthResponse(User user)
+    private async Task<AuthResponse> PrepareAuthResponse(User user)
     {
         string accessToken = _jwtProvider.GenerateAccessToken(user, _options);
         string refreshToken = (await _refreshTokenService.GenerateForUserAsync(user.Id,

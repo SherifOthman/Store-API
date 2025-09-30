@@ -16,14 +16,18 @@ public static class ApplicationDependencies
     {
         services.AddScoped<IJwtProvider, JwtProvider>();
         services.AddScoped<IPasswordHasher, PasswordHasher>();
-        services.AddScoped<IRefreshTokenService, RefreshTokenService>();
-        services.AddScoped<IUserService, UserService>();
-        services.AddScoped<IAuthService, AuthService>();
         services.AddScoped<IFileService, FileService>();
         services.AddScoped<IFileUrlBuilder, FileUrlBuilder>();
+
+        services.AddScoped<IAuthService, AuthService>();
+        services.AddScoped<IUserService, UserService>();
+        services.AddScoped<IRefreshTokenService, RefreshTokenService>();
+        services.AddScoped<ICategoryService, CategoryService>();
+
         services.AddScoped<IValidator<SignUpRequest>, SignUpRequestValidator>();
         services.AddScoped<IValidator<UpdateUserRequest>, UpdateUserRequestValidator>();
-
+        services.AddScoped<IValidator<CreateCategoryRequest>, CreateCategoryRequestValidator>();
+        services.AddScoped<IValidator<UpdateCategoryRequest>, UpdateCategoryRequestValidator>();
 
         services.Configure<JwtOptions>(configuration.GetSection(key: "JWT"));
 
@@ -48,7 +52,6 @@ public static class ApplicationDependencies
                     ClockSkew = TimeSpan.Zero
                 };
 
-           
             });
 
         return services;
