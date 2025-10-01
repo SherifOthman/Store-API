@@ -25,7 +25,6 @@ builder.Services.AddInfrastructureDependencies(builder.Configuration);
 builder.Services.AddApplicationDependencies(builder.Configuration);
 
 
-
 try
 {
     Log.Information("Starting web application");
