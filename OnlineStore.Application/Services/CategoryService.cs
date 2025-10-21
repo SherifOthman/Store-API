@@ -30,6 +30,9 @@ public class CategoryService : ICategoryService
         if (!result.IsValid)
             return Result<Category>.Fail(result.Errors.ToErrorItemList());
 
+        if (await _unitOfWork.Categories.IsExists(request.Name))
+            return Result<Category>.Fail("This category already exists.");
+
         var category = request.Adapt<Category>();
         category.CreatedAt = DateTime.UtcNow;
 

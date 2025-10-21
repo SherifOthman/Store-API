@@ -12,4 +12,6 @@ public interface ICategoryRepository
     public Task UpdateAsync(Category category);
 
     public Task DeleteAsync(int id);
+
+    public Task<bool> IsExists(string Name);
 }
